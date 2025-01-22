@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "notify",
+      "type": "com.gushan.properties.NotifyProperties",
+      "sourceType": "com.gushan.properties.NotifyProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "notify.scan-packages",
+      "type": "java.util.List<java.lang.String>",
+      "description": "需要监控异常的包路径",
+      "sourceType": "com.gushan.properties.NotifyProperties"
+    },
+    {
+      "name": "notify.exclude-exceptions",
+      "type": "java.util.List<java.lang.String>",
+      "description": "需要排除的异常类型",
+      "sourceType": "com.gushan.properties.NotifyProperties"
+    },
+    {
+      "name": "notify.threshold",
+      "type": "java.lang.Integer",
+      "description": "异常通知阈值",
+      "sourceType": "com.gushan.properties.NotifyProperties",
+      "defaultValue": 3
+    },
+    {
+      "name": "notify.frequency",
+      "type": "java.lang.Long",
+      "description": "同一异常的最小通知间隔(秒)",
+      "sourceType": "com.gushan.properties.NotifyProperties",
+      "defaultValue": 60
+    }
+  ]
+} 

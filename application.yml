@@ -1,0 +1,14 @@
+notify:
+  dingtalk:
+    enabled: true
+    webhook: https://oapi.dingtalk.com/robot/send?access_token=xxx
+    secret: your-secret
+  email:
+    enabled: true
+    host: smtp.example.com
+    port: 25
+    username: sender@example.com
+    password: your-password
+    from: sender@example.com
+    to:
+      - admin@example.com 

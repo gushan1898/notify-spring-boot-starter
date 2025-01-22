@@ -1,0 +1,22 @@
+notify-spring-boot-starter/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── gushan/
+│   │   │           ├── annotation/
+│   │   │           ├── config/
+│   │   │           ├── constant/
+│   │   │           ├── exception/
+│   │   │           ├── handler/
+│   │   │           ├── properties/
+│   │   │           └── sender/
+│   │   └── resources/
+│   │       └── META-INF/
+│   └── test/
+│       └── java/
+│           └── com/
+│               └── gushan/
+├── .gitignore
+├── pom.xml
+└── README.md 
