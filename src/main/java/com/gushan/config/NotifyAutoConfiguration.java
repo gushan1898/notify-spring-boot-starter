@@ -1,5 +1,6 @@
 package com.gushan.config;
 
+import org.springframework.context.annotation.ComponentScan;
 import com.gushan.handler.GlobalExceptionHandler;
 import com.gushan.handler.RateLimitHandler;
 import com.gushan.properties.NotifyProperties;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Configuration
 @EnableConfigurationProperties(NotifyProperties.class)
+@ComponentScan(basePackages = "com.gushan.sender")
 public class NotifyAutoConfiguration {
     
     /**
