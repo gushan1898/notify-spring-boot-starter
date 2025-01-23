@@ -5,9 +5,13 @@ import com.gushan.handler.GlobalExceptionHandler;
 import com.gushan.properties.NotifyProperties;
 import com.gushan.sender.NotifySender;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -19,7 +23,7 @@ import static org.mockito.Mockito.verify;
  * <p>
  * 测试通知功能的完整集成流程，包括配置加载、异常处理、通知发送等
  */
-@SpringBootTest(classes = NotifyAutoConfiguration.class)
+@SpringBootTest(classes = {NotifyAutoConfiguration.class, NotifyIntegrationTest.TestConfig.class})
 @TestPropertySource(properties = {
     "notify.scan-packages=com.gushan",
     "notify.threshold=1",
@@ -31,6 +35,15 @@ import static org.mockito.Mockito.verify;
     "notify.email.password=password"
 })
 class NotifyIntegrationTest {
+
+    @Configuration
+    static class TestConfig {
+        @Bean
+        @Primary
+        public NotifySender testNotifySender() {
+            return Mockito.mock(NotifySender.class);
+        }
+    }
 
     @Autowired
     private GlobalExceptionHandler exceptionHandler;

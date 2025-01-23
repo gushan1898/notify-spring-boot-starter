@@ -30,7 +30,7 @@ public class RateLimitHandler {
      * @return true表示允许发送通知，false表示需要限制
      */
     public boolean shouldNotify(Exception exception) {
-        String key = exception.getClass().getName();
+        String key = exception.getClass().getName() + ":" + exception.getMessage();
         long now = System.currentTimeMillis();
         
         synchronized (this) {
