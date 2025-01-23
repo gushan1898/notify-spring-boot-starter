@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
  * <p>
  * 测试通知功能的完整集成流程，包括配置加载、异常处理、通知发送等
  */
-@SpringBootTest(classes = {NotifyAutoConfiguration.class, NotifyIntegrationTest.TestConfig.class})
+@SpringBootTest(classes = NotifyAutoConfiguration.class)
 @TestPropertySource(properties = {
     "notify.scan-packages=com.gushan",
     "notify.threshold=1",
@@ -36,22 +36,13 @@ import static org.mockito.Mockito.verify;
 })
 class NotifyIntegrationTest {
 
-    @Configuration
-    static class TestConfig {
-        @Bean
-        @Primary
-        public NotifySender testNotifySender() {
-            return Mockito.mock(NotifySender.class);
-        }
-    }
-
     @Autowired
     private GlobalExceptionHandler exceptionHandler;
 
     @Autowired
     private NotifyProperties properties;
 
-    @MockBean
+    @MockBean(name = "dingTalkNotifySender")
     private NotifySender notifySender;
 
     /**
@@ -62,7 +53,7 @@ class NotifyIntegrationTest {
         RuntimeException exception = new RuntimeException("Test Exception");
         exceptionHandler.handleException(exception);
 
-        verify(notifySender, times(1)).send(any(Exception.class));
+        verify(this.notifySender, times(1)).send(any(Exception.class));
     }
 
     /**
@@ -74,10 +65,10 @@ class NotifyIntegrationTest {
         RuntimeException exception = new RuntimeException("Test Exception");
 
         exceptionHandler.handleException(exception);
-        verify(notifySender, times(0)).send(any(Exception.class));
+        verify(this.notifySender, times(0)).send(any(Exception.class));
 
         exceptionHandler.handleException(exception);
-        verify(notifySender, times(1)).send(any(Exception.class));
+        verify(this.notifySender, times(1)).send(any(Exception.class));
     }
 
     /**
@@ -91,6 +82,6 @@ class NotifyIntegrationTest {
         exceptionHandler.handleException(exception);
         exceptionHandler.handleException(exception);
 
-        verify(notifySender, times(1)).send(any(Exception.class));
+        verify(this.notifySender, times(1)).send(any(Exception.class));
     }
 }

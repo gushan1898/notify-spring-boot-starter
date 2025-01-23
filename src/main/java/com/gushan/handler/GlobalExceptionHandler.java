@@ -40,22 +40,28 @@ public class GlobalExceptionHandler {
             return;
         }
         
+        // 先检查是否应该发送通知
         if (!rateLimitHandler.shouldNotify(e)) {
             log.debug("异常未达到通知阈值: {}", e.getMessage());
             return;
         }
-        
-        try {
-            for (NotifySender sender : notifySenders) {
-                try {
+
+        // 确保在允许发送通知的情况下才执行发送逻辑
+        boolean sent = false;
+        for (NotifySender sender : notifySenders) {
+            try {
+                if (rateLimitHandler.shouldNotify(e)) {
                     sender.send(e);
-                    break; // 发送成功后直接返回
-                } catch (Exception ex) {
-                    log.error("通知发送失败: {}", sender.getClass().getSimpleName(), ex);
+                    sent = true;
+                    break;
                 }
+            } catch (Exception ex) {
+                log.error("通知发送失败: {}", sender.getClass().getSimpleName(), ex);
             }
-        } catch (Exception ex) {
-            log.error("发送异常通知失败", ex);
+        }
+        
+        if (!sent) {
+            log.debug("未发送任何通知");
         }
     }
 }
